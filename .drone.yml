@@ -1,0 +1,27 @@
+pipeline:
+  build-index:
+    image: linkyard/helm
+    pull: true
+    commands:
+      - git config --global user.email "bot@presslabs.com"
+      - git config --global user.name "Igor Debot"
+      - git fetch --no-tags origin +refs/heads/gh-pages
+      - git checkout --force gh-pages
+      - helm repo index --url https://presslabs-kubes.github.io/charts ./
+      - git add . && git commit -m "Update charts index"
+    when:
+      branch: master
+
+  publish-index:
+    image: appleboy/drone-git-push
+    remote: git@github.com:presslabs-kubes/charts.git
+    branch: gh-pages
+    local_ref: gh-pages
+    secrets:
+      - GIT_PUSH_SSH_KEY
+    when:
+      branch: master
+
+branches:
+  exclude:
+    - gh-pages
