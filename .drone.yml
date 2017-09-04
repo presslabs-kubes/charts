@@ -1,18 +1,31 @@
+workspace:
+  base: /drone
+  path: src/github.com/presslabs-kubes/charts
+
 pipeline:
-  build-index:
+  build:
     image: linkyard/helm
     pull: true
     commands:
+      - helm init --client-only
+      - mkdir /drone/charts && cd /drone/charts
+      - for chart in /drone/src/github.com/presslabs-kubes/charts/* ; do
+        if [ -d "$chart" ] ; then
+          helm package "$chart" ;
+        fi ;
+        done
+      - cd /drone/src/github.com/presslabs-kubes/charts
       - git config --global user.email "bot@presslabs.com"
       - git config --global user.name "Igor Debot"
       - git fetch --no-tags origin +refs/heads/gh-pages
       - git checkout --force gh-pages
+      - cp /drone/charts/* ./
       - helm repo index --url https://presslabs-kubes.github.io/charts ./
       - git add . && git commit -m "Update charts index"
     when:
       branch: master
 
-  publish-index:
+  publish:
     image: appleboy/drone-git-push
     remote: git@github.com:presslabs-kubes/charts.git
     branch: gh-pages
