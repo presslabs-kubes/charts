@@ -1,0 +1,11 @@
+pipeline:
+  build:
+    image: linkyard/helm
+    pull: true
+    commands:
+      - git config --global user.email "ping@presslabs.com"
+      - git config --global user.name "Igor Debot"
+      - cd docs && helm repo index --url https://presslabs-kubes.github.io/charts ./
+      - cd ../ && git add . && git commit -m "Update charts index [CI SKIP]" && git push origin master
+    when:
+      branch: master
