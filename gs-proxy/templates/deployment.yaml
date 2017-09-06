@@ -14,18 +14,18 @@ spec:
       labels:
         app: {{ template "name" . }}
         release: {{ .Release.Name }}
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}
+          env:
+            - name: GS_BUCKET
+              value: {{ .Values.config.bucket }}
+            - name: INDEX
+              value: {{ .Values.config.index }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
-          volumeMounts:
-            - name: config
-              mountPath: /etc/nginx/conf.d
           # livenessProbe:
           #   httpGet:
           #     path: /
@@ -36,10 +36,6 @@ spec:
           #     port: {{ .Values.service.internalPort }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
-      volumes:
-        - name: "config"
-          configMap:
-            name: {{ template "fullname" . }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
