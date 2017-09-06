@@ -2,11 +2,19 @@ apiVersion: v1
 entries:
   gs-proxy:
   - apiVersion: v1
-    created: 2017-09-04T19:51:49.640942092Z
+    created: 2017-09-06T20:25:14.829117104Z
+    description: Google Storage kubernetes proxy
+    digest: 2578b1560aeacad4351d3cd372d0598e76c9a4b5887ccce42830b1f4f6b99f84
+    name: gs-proxy
+    urls:
+    - https://presslabs-kubes.github.io/charts/gs-proxy-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v1
+    created: 2017-09-06T20:25:14.828949777Z
     description: Google Storage kubernetes proxy
     digest: d5f3bea1921aaf2718631657c54f657e7fb957feca708c7c4789f70160ae0b94
     name: gs-proxy
     urls:
     - https://presslabs-kubes.github.io/charts/gs-proxy-0.1.0.tgz
     version: 0.1.0
-generated: 2017-09-04T19:51:49.640666974Z
+generated: 2017-09-06T20:25:14.828670763Z
