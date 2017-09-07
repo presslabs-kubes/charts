@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "name" . }}-web
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+        role: web
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-web
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /admin/login
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /admin/login
+              port: {{ .Values.service.internalPort }}
+          env:
+            {{- include "zinc.env" . | indent 12 }}
