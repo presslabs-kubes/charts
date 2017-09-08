@@ -7,7 +7,7 @@
       name: {{ template "fullname" . }}
       key: SECRET_KEY
 - name: ZINC_DB_ENGINE
-  value: {{ .Values.config.dbEnging }}
+  value: {{ .Values.config.dbEngine }}
 - name: ZINC_DB_HOST
   value: {{ .Values.config.dbHost }}
 - name: ZINC_DB_USER
@@ -21,7 +21,7 @@
       name: {{ template "fullname" . }}
       key: DB_PASSWORD
 - name: ZINC_DB_NAME
-  value: {{ .Values.config.dbName }}
+  value: {{ .Values.mysql.mysqlDatabase }}
 - name: ZINC_GOOGLE_OAUTH2_KEY
   valueFrom:
     secretKeyRef:
@@ -54,12 +54,8 @@
       key: AWS_KEY
 - name: ZINC_ENV_NAME
   value: {{ .Values.config.envName }}
-- name: ZINC_BROCKER_URL
-  value: {{ .Values.config.brockerUrl }}
-- name: ZINC_CELERY_RESULT_BACKEND
-  value: {{ .Values.config.celeryResultBackend }}
-- name: ZINC_LOCK_SERVER_URL
-  value: {{ .Values.config.lockServerUrl }}
+- name: ZINC_REDIS_URL
+  value: {{ .Values.config.redisUrl }}
 - name: ZINC_SENTRY_DSN
   valueFrom:
     secretKeyRef:
@@ -73,4 +69,10 @@
   valueFrom:
     fieldRef:
       fieldPath: status.podIP
+- name: ZINC_MIGRATE
+  value: 'yes'
+- name: ZINC_COLLECT_STATIC
+  value: 'yes'
+- name: ZINC_WEBROOT_DIR
+  value: '/app'
 {{ end -}}

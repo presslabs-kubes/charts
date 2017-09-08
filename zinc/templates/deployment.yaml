@@ -7,30 +7,38 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-
 spec:
-  replicas: 1
+  replicas: {{ .Values.web.replicaCount }}
   template:
     metadata:
       labels:
         app: {{ template "name" . }}
         release: {{ .Release.Name }}
         role: web
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
     spec:
       containers:
         - name: {{ .Chart.Name }}-web
           image: {{ .Values.image }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
-            - containerPort: {{ .Values.service.internalPort }}
+            - containerPort: {{ .Values.web.service.internalPort }}
           livenessProbe:
             httpGet:
               path: /admin/login
-              port: {{ .Values.service.internalPort }}
+              port: {{ .Values.web.service.internalPort }}
             initialDelaySeconds: 30
           readinessProbe:
             httpGet:
               path: /admin/login
-              port: {{ .Values.service.internalPort }}
+              port: {{ .Values.web.service.internalPort }}
+          resources:
+            {{- toYaml .Values.web.resources | indent 12 | printf "\n%s" }}
           env:
             {{- include "zinc.env" . | indent 12 }}
+
+      {{- if .Values.web.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.web.nodeSelector | indent 8 | printf "\n%s"}}
+      {{- end }}

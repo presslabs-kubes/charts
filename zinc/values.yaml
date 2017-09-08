@@ -6,15 +6,10 @@ config:
   secretKey: ""
 
   envName: "staging"
-  brockerUrl: redis://zinc-redis:6370/0
-  celeryResultBackend: redis://zinc-redis:6379/1
-  lockServerUrl: redis://zinc-redis:6379/2
+  redisUrl: redis://zinc-redis:6379/
 
-  dbName: "zinc"
-  dbUser: "zinc"
-  dbPassword: ""
-  dbHost: zinc-mysql:3306
-  dbEngine: django.db.backend.mysql
+  dbHost: zinc-mysql
+  dbEngine: django.db.backends.mysql
 
   socialAuthKey: ""
   socialAuthSecrete: ""
@@ -30,9 +25,56 @@ config:
   allowedHosts: [".stage.presslabs.net", ".presslabs.net"]
 
 
-service:
-  internalPort: 8000
-  externalPort: 80
+web:
+  replicatCount: 1
+  resources:
+    requests:
+      memory: 128Mi
+  service:
+    internalPort: 8000
+    externalPort: 80
+
+
+beat:
+  resources: {}
+
+worker:
+  replicaCount: 1
+
+
+mysql:
+  enabled: true
+
+  mysqlUser: zinc
+  mysqlPassword: ""
+  mysqlDatabase: zinc
+
+  configurationFiles:
+    mysql.cnf: |-
+      [client]
+      default-character-set = utf8mb4
+
+      [mysql]
+      default-character-set = utf8mb4
+
+      [mysqld]
+      character-set-server = utf8mb4
+      collation-server = utf8mb4_unicode_ci
+      skip-name-resolve
+
+redis:
+  enabled: true
+  usePassword: false  # remove an set password when https://github.com/kubernetes/charts/issues/1857 gets fixed
+  metrics:
+    enabled: true
+  args:
+    - "redis-server"
+    - "--protected-mode no"  # remove when usePassword: true
+    - "--maxmemory-policy volatile-ttl"
+    - "--maxmemory 256mb"
+    - "--save 300 1"
+    - "--save 60 10000"
+    - "--appendonly yes"
 
 ingress:
   enabled: true
@@ -41,3 +83,7 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: true
+  tls:
+    # - secreteName: zinc-tls
+    #   hosts:
+    #     - zinc2.stage.presslabs.net

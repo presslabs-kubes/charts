@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-celery-worker
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.worker.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+        role: celery-worker
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-celery-worker
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          args:
+            - celery
+            - "--concurrency=4"
+          resources:
+            {{- toYaml .Values.worker.resources | indent 12 | printf "\n%s"}}
+          env:
+            {{- include "zinc.env" . | indent 12 }}
+
+      {{- if .Values.worker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.worker.nodeSelector | indent 8 | printf "\n%s" }}
+      {{- end }}
