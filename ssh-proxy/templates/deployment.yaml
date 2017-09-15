@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          env:
+            - name: AUTHORIZED_KEYS
+              value: {{ required "A valid .config.authorizedKeys is required!" .Values.config.authorizedKeys | quote }}
+            - name: FORWARD_ADDRESS
+              value: {{ required "A valid .config.forwardAddress is required!" .Values.config.forwardAddress | quote }}
+          volumeMounts:
+            - name: sshd-host-keys
+              mountPath: "/run/sshd_host_keys"
+              readOnly: true
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+      volumes:
+        - name: sshd-host-keys
+          secret:
+            secretName: {{ template "fullname" . }}-sshd-host-keys
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}

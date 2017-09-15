@@ -1,0 +1,39 @@
+# Default values for ssh-proxy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  authorizedKeys: ""
+  forwardAddress: ""
+
+sshd_host_keys: {}
+  # - ssh_host_dsa_key: ""
+  # - ssh_host_dsa_key.pub: ""
+  # - ssh_host_ecdsa_key: ""
+  # - ssh_host_ecdsa_key.pub: ""
+  # - ssh_host_ed25519_key: ""
+  # - ssh_host_ed25519_key.pub: ""
+  # - ssh_host_rsa_key: ""
+  # - ssh_host_rsa_key.pub: ""
+
+replicaCount: 1
+image: presslabskubes/ssh-proxy:latest
+imagePullPolicy: Always
+
+service:
+  name: ssh-proxy
+  type: ClusterIP
+  externalPort: 22
+  internalPort: 22
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
