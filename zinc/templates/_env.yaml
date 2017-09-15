@@ -63,16 +63,8 @@
       key: SENTRY_DSN
 - name: ZINC_ALLOWED_HOSTS
   value: {{ .Values.config.allowedHosts | join "," }}
-- name: ZINC_LOG_LEVEL
-  value: 'DEBUG'
 - name: POD_IP
   valueFrom:
     fieldRef:
       fieldPath: status.podIP
-- name: ZINC_MIGRATE
-  value: 'yes'
-- name: ZINC_COLLECT_STATIC
-  value: 'yes'
-- name: ZINC_WEBROOT_DIR
-  value: '/app'
-{{ end -}}
+{{- end -}}

@@ -37,6 +37,10 @@ spec:
             {{- toYaml .Values.web.resources | indent 12 | printf "\n%s" }}
           env:
             {{- include "zinc.env" . | indent 12 }}
+            - name: ZINC_MIGRATE
+              value: 'yes'
+            - name: ZINC_COLLECT_STATIC
+              value: 'yes'
 
       {{- if .Values.web.nodeSelector }}
       nodeSelector:
