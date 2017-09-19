@@ -25,6 +25,7 @@ service:
   type: ClusterIP
   externalPort: 22
   internalPort: 22
+  loadBalancerIP: ""
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
