@@ -7,14 +7,14 @@ config:
   forwardAddress: ""
 
 sshd_host_keys: {}
-  # - ssh_host_dsa_key: ""
-  # - ssh_host_dsa_key.pub: ""
-  # - ssh_host_ecdsa_key: ""
-  # - ssh_host_ecdsa_key.pub: ""
-  # - ssh_host_ed25519_key: ""
-  # - ssh_host_ed25519_key.pub: ""
-  # - ssh_host_rsa_key: ""
-  # - ssh_host_rsa_key.pub: ""
+  # ssh_host_dsa_key: ""
+  # ssh_host_dsa_key.pub: ""
+  # ssh_host_ecdsa_key: ""
+  # ssh_host_ecdsa_key.pub: ""
+  # ssh_host_ed25519_key: ""
+  # ssh_host_ed25519_key.pub: ""
+  # ssh_host_rsa_key: ""
+  # ssh_host_rsa_key.pub: ""
 
 replicaCount: 1
 image: presslabskubes/ssh-proxy:latest

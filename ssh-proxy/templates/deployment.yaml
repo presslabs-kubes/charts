@@ -23,6 +23,14 @@ spec:
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.service.internalPort }}
           env:
             - name: AUTHORIZED_KEYS
               value: {{ required "A valid .config.authorizedKeys is required!" .Values.config.authorizedKeys | quote }}
