@@ -1,0 +1,22 @@
+image: docker.io/colemickens/oauth2_proxy:latest
+namespace: default
+
+cookieDomain: ''
+emailDomain: ''
+
+config:
+  provider: google
+  clientID: ''
+  clientSecret: ''
+  secret: ''
+
+service:
+  internalPort: 4180
+  externalPort: 4180
+
+ingress:
+  host: ''
+  annotations:
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+
