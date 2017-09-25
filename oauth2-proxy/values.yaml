@@ -1,10 +1,11 @@
-image: docker.io/colemickens/oauth2_proxy:latest
+image: presslabskubes/oauth2-proxy
 namespace: default
 
 config:
   cookieDomain: ''
   emailDomain: ''
   limitRedirectDomain: ''
+  cookieRefresh: '1h'
   provider: google
   clientID: ''
   clientSecret: ''
