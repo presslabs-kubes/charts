@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ template "name" . }}
+          image: {{ .Values.image }}
+          imagePullPolicy: Always
+          args:
+          {{- if .Values.config.provider }}
+          - --provider={{ .Values.config.provider }}
+          {{- end }}
+          - --upstream=file:///dev/null
+          - --http-address=0.0.0.0:{{ .Values.service.internalPort }}
+          {{- if .Values.config.emailDomain }}
+          - --email-domain={{ .Values.config.emailDomain }}
+          {{- end }}
+          {{- if .Values.config.cookieDomain }}
+          - --cookie-domain={{ .Values.config.cookieDomain }}
+          {{- end }}
+          - --set-xauthrequest
+          env:
+          - name: OAUTH2_PROXY_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "fullname" . }}
+                key: CLIENT_ID
+          - name: OAUTH2_PROXY_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "fullname" . }}
+                key: CLIENT_SECRET
+          - name: OAUTH2_PROXY_COOKIE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "fullname" . }}
+                key: SECRET
+          - name: OAUTH2_PROXY_COOKIE_REFRESH
+            value: {{ .Values.config.cookieRefresh }}
+          ports:
+          - containerPort: {{ .Values.service.internalPort }}
+            protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | indent 12 | printf "\n%s" }}

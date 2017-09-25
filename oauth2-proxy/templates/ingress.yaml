@@ -1,0 +1,24 @@
+{{ $domain := required "Missing .limitRedirectDomain" .Values.config.limitRedirectDomain | replace "." "\\." -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "fullname" . }}
+  annotations:
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^/redirect/(https?)/({{ $domain }}|.+?\.{{ $domain }})$ $1://$2 redirect;
+spec:
+  rules:
+  - host: {{ required "Missing value .ingress.host" .Values.ingress.host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ template "fullname" . }}
+          servicePort: http
+        path: /
+  tls:
+  - hosts:
+    - {{ .Values.ingress.host }}
+    secretName: {{ template "name" . }}-tls
