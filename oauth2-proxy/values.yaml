@@ -1,15 +1,19 @@
 image: presslabskubes/oauth2-proxy
-namespace: default
+replicaCount: 1
 
 config:
   cookieDomain: ''
   emailDomain: ''
   limitRedirectDomain: ''
+
+  provider: ''
   cookieRefresh: '1h'
-  provider: google
+
   clientID: ''
   clientSecret: ''
   secret: ''
+
+resources: {}
 
 service:
   internalPort: 4180

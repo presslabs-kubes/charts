@@ -2,13 +2,12 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ template "fullname" . }}
-  namespace: {{ .Values.namespace }}
   labels:
     app: {{ template "name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
@@ -20,7 +19,9 @@ spec:
           image: {{ .Values.image }}
           imagePullPolicy: Always
           args:
+          {{- if .Values.config.provider }}
           - --provider={{ .Values.config.provider }}
+          {{- end }}
           - --upstream=file:///dev/null
           - --http-address=0.0.0.0:{{ .Values.service.internalPort }}
           {{- if .Values.config.emailDomain }}
@@ -51,3 +52,5 @@ spec:
           ports:
           - containerPort: {{ .Values.service.internalPort }}
             protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | indent 12 | printf "\n%s" }}
