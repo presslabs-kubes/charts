@@ -1,3 +1,3 @@
 name: oauth2-proxy
-description: Login management
-version: 0.1.0
+description: Bitly's oauth2 proxy
+version: 0.1.1
