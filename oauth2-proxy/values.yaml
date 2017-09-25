@@ -1,10 +1,10 @@
 image: docker.io/colemickens/oauth2_proxy:latest
 namespace: default
 
-cookieDomain: ''
-emailDomain: ''
-
 config:
+  cookieDomain: ''
+  emailDomain: ''
+  limitRedirectDomain: ''
   provider: google
   clientID: ''
   clientSecret: ''

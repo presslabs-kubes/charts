@@ -7,6 +7,8 @@ metadata:
     {{- range $key, $value := .Values.ingress.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
+    ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^/redirect/(https?)/(.*.{{ required "Missing limitRedirectDomain" .Values.config.limitRedirectDomain}})$ $1://$2 redirect;
 spec:
   rules:
   - host: {{ required "Missing value .ingress.host" .Values.ingress.host }}
