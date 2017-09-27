@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   gs-proxy:
   - apiVersion: v1
-    created: 2017-09-26T18:03:34.520550025Z
+    created: 2017-09-27T09:03:45.948577719Z
     description: Google Storage kubernetes proxy
     digest: 2578b1560aeacad4351d3cd372d0598e76c9a4b5887ccce42830b1f4f6b99f84
     name: gs-proxy
@@ -10,7 +10,7 @@ entries:
     - https://presslabs-kubes.github.io/charts/gs-proxy-0.2.0.tgz
     version: 0.2.0
   - apiVersion: v1
-    created: 2017-09-26T18:03:34.520384407Z
+    created: 2017-09-27T09:03:45.948420395Z
     description: Google Storage kubernetes proxy
     digest: d5f3bea1921aaf2718631657c54f657e7fb957feca708c7c4789f70160ae0b94
     name: gs-proxy
@@ -18,14 +18,14 @@ entries:
     - https://presslabs-kubes.github.io/charts/gs-proxy-0.1.0.tgz
     version: 0.1.0
   oauth2-proxy:
-  - created: 2017-09-26T18:03:34.520821576Z
+  - created: 2017-09-27T09:03:45.949050093Z
     description: Bitly's oauth2 proxy
     digest: 9d236c12285d9a2d097b1379f0948ac39f097d39ca89d99a8843e96b36f96560
     name: oauth2-proxy
     urls:
     - https://presslabs-kubes.github.io/charts/oauth2-proxy-0.1.1.tgz
     version: 0.1.1
-  - created: 2017-09-26T18:03:34.520693156Z
+  - created: 2017-09-27T09:03:45.948712827Z
     description: Login management
     digest: 209dd8563dd78509b2c3612318ef18518ab6e6eb40dff4a575587f221e4fc1d1
     name: oauth2-proxy
@@ -33,11 +33,11 @@ entries:
     - https://presslabs-kubes.github.io/charts/oauth2-proxy-0.1.0.tgz
     version: 0.1.0
   redis:
-  - created: 2017-09-26T18:03:34.521669118Z
+  - created: 2017-09-27T09:03:45.949856473Z
     description: Open source, advanced key-value store. It is often referred to as
       a data structure server since keys can contain strings, hashes, lists, sets
       and sorted sets. This is a fork of `stable/redis`.
-    digest: dce61821f223b54bd84590f6093c7f998b721510b638a89eb1a61a87e77d655f
+    digest: 1fa60274308653dd8ecf25861df7813e54c34ad9cbb1ce71c551e155ebf3a933
     home: http://redis.io/
     icon: https://bitnami.com/assets/stacks/redis/img/redis-stack-220x234.png
     keywords:
@@ -50,7 +50,7 @@ entries:
     version: 0.1.0
   ssh-proxy:
   - apiVersion: v1
-    created: 2017-09-26T18:03:34.522694974Z
+    created: 2017-09-27T09:03:45.950568649Z
     description: SSH Proxy to kubernetes cluster resources
     digest: 0cc69809714e2a6817f4e11d0c68d8bae27277dddb5e0280fc6096f48d7f541d
     name: ssh-proxy
@@ -58,7 +58,7 @@ entries:
     - https://presslabs-kubes.github.io/charts/ssh-proxy-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v1
-    created: 2017-09-26T18:03:34.522532537Z
+    created: 2017-09-27T09:03:45.950391096Z
     description: SSH Proxy to kubernetes cluster resources
     digest: 5567a7ea696bdc47bd39ddaea5a9aba4956c7fa077620420a9ae80f157276c0e
     name: ssh-proxy
@@ -66,7 +66,7 @@ entries:
     - https://presslabs-kubes.github.io/charts/ssh-proxy-0.1.2.tgz
     version: 0.1.2
   - apiVersion: v1
-    created: 2017-09-26T18:03:34.522372526Z
+    created: 2017-09-27T09:03:45.950216861Z
     description: SSH Proxy to kubernetes cluster resources
     digest: 43843c39dfeb3c12cbef3f2c7304a5df97723b3cb5b36c34087ac46219cc50ba
     name: ssh-proxy
@@ -74,11 +74,11 @@ entries:
     - https://presslabs-kubes.github.io/charts/ssh-proxy-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
-    created: 2017-09-26T18:03:34.522187147Z
+    created: 2017-09-27T09:03:45.950033073Z
     description: SSH Proxy to kubernetes cluster resources
     digest: 75c6ab0294d1e2ca3bbe39018f967b1361602685a6441850e859f0bfbd311a32
     name: ssh-proxy
     urls:
     - https://presslabs-kubes.github.io/charts/ssh-proxy-0.1.0.tgz
     version: 0.1.0
-generated: 2017-09-26T18:03:34.520105406Z
+generated: 2017-09-27T09:03:45.94813681Z
