@@ -1,10 +1,8 @@
 # Redis
 
+**This is a fork of [stable/redis](https://github.com/kubernetes/charts/tree/master/stable/redis) version 0.10.1 which uses the official redis docker image.**
+
 [Redis](http://redis.io/) is an advanced key-value cache and store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets, sorted sets, bitmaps and hyperloglogs.
-
-**THIS IS FORK OF `[stable/redis](https://github.com/kubernetes/charts/tree/master/stable/redis)` version 0.10.1**
-
-This chart is using the official redis docker image.
 
 ## TL;DR;
 
