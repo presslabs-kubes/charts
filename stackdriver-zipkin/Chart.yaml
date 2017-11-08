@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Zipkin proxy for Stackdriver
+name: stackdriver-zipkin
+version: 0.1.1

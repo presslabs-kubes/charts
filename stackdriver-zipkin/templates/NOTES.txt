@@ -1,0 +1,2 @@
+You should point your zipkin collector to:
+    http://{{ template "stackdriver-zipkin.fullname" . }}:{{ .Values.service.externalPort }}

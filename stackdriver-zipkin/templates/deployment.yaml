@@ -1,0 +1,65 @@
+{{- $secretName := include "stackdriver-zipkin.fullname" . }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "stackdriver-zipkin.fullname" . }}
+  labels:
+    app: {{ template "stackdriver-zipkin.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "stackdriver-zipkin.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            httpGet:
+              path: /health.json
+              port: {{ .Values.service.internalPort }}
+          readinessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            httpGet:
+              path: /health.json
+              port: {{ .Values.service.internalPort }}
+          env:
+            {{- if (hasKey .Values.secretFiles "google-credentials.json") }}
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/run/google-credentials.json"
+            {{- end }}
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $secretName }}
+                  key: {{ $key }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | indent 12 | printf "\n%s" }}
+          volumeMounts:
+            {{- if (hasKey .Values.secretFiles "google-credentials.json") }}
+            - name: secrets
+              mountPath: /run/google-credentials.json
+              subPath: google-credentials.json
+            {{- end }}
+      volumes:
+        - name: secrets
+          secret:
+            secretName: {{ template "stackdriver-zipkin.fullname" . }}
+            defaultMode: {{ .Values.secretFilesDefaultMode }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
