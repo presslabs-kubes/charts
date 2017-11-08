@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   gs-proxy:
   - apiVersion: v1
-    created: 2017-09-27T09:03:45.948577719Z
+    created: 2017-11-08T15:21:55.476163165Z
     description: Google Storage kubernetes proxy
     digest: 2578b1560aeacad4351d3cd372d0598e76c9a4b5887ccce42830b1f4f6b99f84
     name: gs-proxy
@@ -10,7 +10,7 @@ entries:
     - https://presslabs-kubes.github.io/charts/gs-proxy-0.2.0.tgz
     version: 0.2.0
   - apiVersion: v1
-    created: 2017-09-27T09:03:45.948420395Z
+    created: 2017-11-08T15:21:55.47600071Z
     description: Google Storage kubernetes proxy
     digest: d5f3bea1921aaf2718631657c54f657e7fb957feca708c7c4789f70160ae0b94
     name: gs-proxy
@@ -18,14 +18,14 @@ entries:
     - https://presslabs-kubes.github.io/charts/gs-proxy-0.1.0.tgz
     version: 0.1.0
   oauth2-proxy:
-  - created: 2017-09-27T09:03:45.949050093Z
+  - created: 2017-11-08T15:21:55.477187361Z
     description: Bitly's oauth2 proxy
     digest: 9d236c12285d9a2d097b1379f0948ac39f097d39ca89d99a8843e96b36f96560
     name: oauth2-proxy
     urls:
     - https://presslabs-kubes.github.io/charts/oauth2-proxy-0.1.1.tgz
     version: 0.1.1
-  - created: 2017-09-27T09:03:45.948712827Z
+  - created: 2017-11-08T15:21:55.476290409Z
     description: Login management
     digest: 209dd8563dd78509b2c3612318ef18518ab6e6eb40dff4a575587f221e4fc1d1
     name: oauth2-proxy
@@ -33,7 +33,7 @@ entries:
     - https://presslabs-kubes.github.io/charts/oauth2-proxy-0.1.0.tgz
     version: 0.1.0
   redis:
-  - created: 2017-09-27T09:03:45.949856473Z
+  - created: 2017-11-08T15:21:55.47747947Z
     description: Open source, advanced key-value store. It is often referred to as
       a data structure server since keys can contain strings, hashes, lists, sets
       and sorted sets. This is a fork of `stable/redis`.
@@ -50,7 +50,7 @@ entries:
     version: 0.1.0
   ssh-proxy:
   - apiVersion: v1
-    created: 2017-09-27T09:03:45.950568649Z
+    created: 2017-11-08T15:21:55.478154314Z
     description: SSH Proxy to kubernetes cluster resources
     digest: 0cc69809714e2a6817f4e11d0c68d8bae27277dddb5e0280fc6096f48d7f541d
     name: ssh-proxy
@@ -58,7 +58,7 @@ entries:
     - https://presslabs-kubes.github.io/charts/ssh-proxy-0.1.3.tgz
     version: 0.1.3
   - apiVersion: v1
-    created: 2017-09-27T09:03:45.950391096Z
+    created: 2017-11-08T15:21:55.477972918Z
     description: SSH Proxy to kubernetes cluster resources
     digest: 5567a7ea696bdc47bd39ddaea5a9aba4956c7fa077620420a9ae80f157276c0e
     name: ssh-proxy
@@ -66,7 +66,7 @@ entries:
     - https://presslabs-kubes.github.io/charts/ssh-proxy-0.1.2.tgz
     version: 0.1.2
   - apiVersion: v1
-    created: 2017-09-27T09:03:45.950216861Z
+    created: 2017-11-08T15:21:55.477806443Z
     description: SSH Proxy to kubernetes cluster resources
     digest: 43843c39dfeb3c12cbef3f2c7304a5df97723b3cb5b36c34087ac46219cc50ba
     name: ssh-proxy
@@ -74,11 +74,20 @@ entries:
     - https://presslabs-kubes.github.io/charts/ssh-proxy-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v1
-    created: 2017-09-27T09:03:45.950033073Z
+    created: 2017-11-08T15:21:55.477651188Z
     description: SSH Proxy to kubernetes cluster resources
     digest: 75c6ab0294d1e2ca3bbe39018f967b1361602685a6441850e859f0bfbd311a32
     name: ssh-proxy
     urls:
     - https://presslabs-kubes.github.io/charts/ssh-proxy-0.1.0.tgz
     version: 0.1.0
-generated: 2017-09-27T09:03:45.94813681Z
+  stackdriver-zipkin:
+  - apiVersion: v1
+    created: 2017-11-08T15:21:55.478299635Z
+    description: Zipkin proxy for Stackdriver
+    digest: a096f4322cf9519917dc60404b83b58d533e109b08ab7ccd9fcdbeff62be5e03
+    name: stackdriver-zipkin
+    urls:
+    - https://presslabs-kubes.github.io/charts/stackdriver-zipkin-0.1.0.tgz
+    version: 0.1.0
+generated: 2017-11-08T15:21:55.475720302Z
