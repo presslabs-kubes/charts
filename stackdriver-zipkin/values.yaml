@@ -26,3 +26,6 @@ resources: {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
+
+## Select pod anti affinity as either hard or soft, default is soft
+antiAffinity: "soft"
