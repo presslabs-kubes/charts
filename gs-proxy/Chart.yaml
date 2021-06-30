@@ -1,4 +1,4 @@
 apiVersion: v1
 description: Google Storage kubernetes proxy
 name: gs-proxy
-version: 0.2.0
+version: 0.3.0
