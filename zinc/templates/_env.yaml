@@ -1,0 +1,70 @@
+{{- define "zinc.env" }}
+- name: ZINC_DEBUG
+  value: {{ .Values.config.debug | quote }}
+- name: ZINC_SECRET_KEY
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "fullname" . }}
+      key: SECRET_KEY
+- name: ZINC_DB_ENGINE
+  value: {{ .Values.config.dbEngine }}
+- name: ZINC_DB_HOST
+  value: {{ .Values.config.dbHost }}
+- name: ZINC_DB_USER
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "fullname" . }}
+      key: DB_USER
+- name: ZINC_DB_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "fullname" . }}
+      key: DB_PASSWORD
+- name: ZINC_DB_NAME
+  value: {{ .Values.mysql.mysqlDatabase }}
+- name: ZINC_GOOGLE_OAUTH2_KEY
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "fullname" . }}
+      key: GOOGLE_OAUTH2_KEY
+- name: ZINC_GOOGLE_OAUTH2_SECRET
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "fullname" . }}
+      key: GOOGLE_OAUTH2_SECRET
+- name: LATTICE_USER
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "fullname" . }}
+      key: LATTICE_USER
+- name: LATTICE_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "fullname" . }}
+      key: LATTICE_PASSWORD
+- name: ZINC_AWS_SECRET
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "fullname" . }}
+      key: AWS_SECRETE
+- name: ZINC_AWS_KEY
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "fullname" . }}
+      key: AWS_KEY
+- name: ZINC_ENV_NAME
+  value: {{ .Values.config.envName }}
+- name: ZINC_REDIS_URL
+  value: {{ .Values.config.redisUrl }}
+- name: ZINC_SENTRY_DSN
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "fullname" . }}
+      key: SENTRY_DSN
+- name: ZINC_ALLOWED_HOSTS
+  value: {{ .Values.config.allowedHosts | join "," }}
+- name: POD_IP
+  valueFrom:
+    fieldRef:
+      fieldPath: status.podIP
+{{- end -}}

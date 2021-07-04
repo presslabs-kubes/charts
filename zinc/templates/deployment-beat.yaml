@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-celery-beat
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+        role: celery-beat
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-celery-beat
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          args:
+            - celerybeat
+          resources:
+            {{- toYaml .Values.beat.resources | indent 12 | printf "\n%s" }}
+          env:
+            {{- include "zinc.env" . | indent 12 }}
+
+      {{- if .Values.beat.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.beat.nodeSelector | indent 8 | printf "\n%s"}}
+      {{- end }}

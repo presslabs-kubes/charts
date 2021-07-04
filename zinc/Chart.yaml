@@ -1,0 +1,4 @@
+name: zinc
+description: Route 53 zone manager
+version: 0.1.0
+home: https://github.com/presslabs/zinc
