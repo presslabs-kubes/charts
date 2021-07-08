@@ -1,0 +1,57 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ template "fullname" . }}
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
+        ports:
+        - name: ssh
+          containerPort: {{ .Values.service.sshInternalPort }}
+        - name: http
+          containerPort: {{ .Values.service.httpInternalPort }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.service.httpInternalPort }}
+          # This pod takes a very long time to start up. Be cautious when
+          # lowering this value to avoid Pod death during startup.
+          initialDelaySeconds: 200
+          timeoutSeconds: 3
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.service.httpInternalPort }}
+          initialDelaySeconds: 200
+          timeoutSeconds: 3
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        volumeMounts:
+        - name: gitea-data
+          mountPath: /data
+        resources:
+      volumes:
+      - name: gitea-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ template "fullname" . }}
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
